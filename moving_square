@@ -1,0 +1,21 @@
+float x;
+float y;
+float easing = 0.05;
+
+//float movement = 0-100; //get input of app! changing float number, eg. 1-100
+
+void setup() {
+ size(900,800);
+ noStroke();  
+}
+
+void draw() {
+ background(51);
+ 
+ float targetY = mouseY; //CursorY is targetY
+ float dy = targetY - y; // dy = Distance from cursor to Rectangle(y)
+ y += dy * easing; // Old position rectangle + new distance * Easing
+ 
+ rect(0, y, width, height);
+
+}
