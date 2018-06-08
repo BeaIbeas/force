@@ -1,0 +1,42 @@
+//Create a rectangle of bubbles, which are spread in a gradient way
+ // Create 5000 bubbles and spread them randomly at this rectangle
+   //most of them at the bottom
+   //least of them at the top
+//Let this rectangle follow the mouse
+//Make each bubble wobble
+
+Star [] StarArray = new Star [10000];
+
+void setup() {
+ size(900,800);
+ background(60);
+ fill(30,20,0);
+ 
+ for (int i=0; i< StarArray.length; i++) {
+ StarArray [i] = new Star();
+}
+
+}
+
+void draw() {      // !!!!
+ background(60);
+ for (int i=0; i< StarArray.length; i++) {
+   StarArray[i].wobble();
+ }
+}
+ 
+class Star {
+ float PositionX = randomGaussian()*width + width/2;
+ float PositionY = randomGaussian()*180 + height;
+ 
+ Star() {      //from setup part
+    noStroke();
+    fill(255,255,255);
+ }
+ 
+ void wobble() {    //from draw part
+  ellipse(PositionX, PositionY, 10, 10);
+  PositionY = PositionY + random(-2,2);
+  PositionX = PositionX + random(-2,2);  
+ }
+}
