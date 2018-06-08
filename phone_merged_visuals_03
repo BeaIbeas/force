@@ -1,0 +1,58 @@
+import oscP5.*;
+import netP5.*;
+ 
+OscP5 oscP5;
+NetAddress myRemoteLocation;
+
+float m ;
+float x ;
+float y ;
+float z ;
+
+float easing = 0.05;
+float zeroPoint = 20; //make work easier
+float multiplyMovement = 8;
+
+void setup() {
+ size(400,400);
+ frameRate(25);
+ noStroke();
+
+ /* start oscP5, listening for incoming messages at port 12000 */
+ oscP5 = new OscP5(this, 12345);
+}
+
+
+void draw() {
+ background(51);
+   
+ float movement = m; //CursorY is targetY
+ float dm = movement - m; // dy = Distance from cursor to Rectangle(y)
+ m += dm * easing; // Old position rectangle + new distance * Easing
+ 
+ rect(0, height -m*multiplyMovement +zeroPoint*multiplyMovement, width, height); //positionY of rectancle is height minus movement input
+ //delay(1);
+ 
+}
+
+void oscEvent(OscMessage msg) {
+ if(
+ msg.addrPattern().contains("/accelerometer/raw/x") || msg.addrPattern().contains("/accelerometer/raw/y") || msg.addrPattern().contains("/accelerometer/raw/z") ) {
+   float x = msg.get(0).floatValue();
+   float y = msg.get(0).floatValue();
+   float z = msg.get(0).floatValue();
+   /* print the address pattern and the typetag of the received OscMessage */
+   print("### accelerometer X data = " + x );
+   println();
+   print("### accelerometer Y data = " + y );
+   println();
+   print("### accelerometer Z data = " + z );
+   println();
+   m = sqrt(sq(x)+sq(y)+sq(z));
+   print("Movement" + m);
+   println();
+
+   //print(" addrpattern: "+theOscMessage.addrPattern());
+   //println(" typetag: "+theOscMessage.typetag());
+ }
+}
