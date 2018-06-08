@@ -1,0 +1,30 @@
+Star Bea;
+
+void setup() {      //here program starts!!!!
+ size(900,800);
+ Bea = new Star();
+}
+
+void draw() {      // !!!!
+ background(51);
+ Bea.move();
+}
+ 
+ 
+class Star {
+ float x;      //from variable part (first)
+ float y;
+ float easing = 0.05;
+ float PositionX = random(0,width);
+
+ Star() {      //from setup part
+    noStroke();
+ }
+ 
+ void move() {    //from draw part
+   float targetY = mouseY; //CursorY is targetY
+   float dy = targetY - y; // dy = Distance from cursor to Rectangle(y)
+   y += dy * easing; // Old position rectangle + new distance * Easing
+   ellipse(PositionX, y, 10, 10);
+ }
+}
